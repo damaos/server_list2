@@ -560,3 +560,57 @@ class PlatformEditView(View):
         return render(request, self.template_name, output) 
 
 
+class ServerDetailView(View):
+    '''
+    Clase para ver los detalles del servidor
+    '''
+    template_name = 'servers/detail_server.html'
+    
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        '''
+        Método get
+        '''
+        query = request.GET.get("q")
+        sort = request.GET.get("sort", 'name')
+        asearch = Asignacion.objects.filter(id=kwargs['id']).first()
+        form = AsignacionForm(instance=asearch)
+        list_server = None
+        if query:
+            list_server = Asignacion.objects.filter(
+                Q(server__name__icontains=query)      
+            )
+        else:
+            list_server = Asignacion.objects.all()
+        
+        page =request.GET.get("page")
+        output = {
+            'form': form,
+            'list_server': list_server
+        }
+        return render(request, self.template_name, output)
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        '''
+        Método post
+        '''
+        asearch = Asignacion.objects.filter(id=kwargs['id']).first()
+        form = AsignacionForm(request.POST, instance=asearch)
+        list_server = Asignacion.objects.all()
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/server/detail')    
+
+        output = {
+            'form': form,
+            'list_server': list_server,
+            'messages': "Revise los campos correctamente.",
+        }
+        
+        return render(request, self.template_name, output) 
+
+
+
+
+

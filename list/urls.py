@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^client/edit/(?P<id>\d+)/$', views.ClientEditView.as_view(), name='editclient'),
     url(r'^interface/edit/(?P<id>\d+)/$', views.InterfaceEditView.as_view(), name='editinterface'),
     url(r'^platform/edit/(?P<id>\d+)/$', views.PlatformEditView.as_view(), name='editplatform'),
+    url(r'^server/detail/(?P<id>\d+)/$', views.ServerDetailView.as_view(), name='detailserver'),
+   
    
 
 ]

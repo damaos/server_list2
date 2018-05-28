@@ -60,36 +60,34 @@
                     <thead class="thead-dark">
                       <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Tipo</th>
                         <th scope="col">Numero de interfaces</th>
+                        <th scope="col">Tipo</th>
                         <th scope="col">Virtualizacion</th>
-                        <th scope="col">Plataforma</th> 
+                        <th scope="col">Plataformas</th> 
                         <th scope="col">Sistema</th> 
                         <th scope="col">Modelo</th>
                         <th scope="col">Servicio</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Sede</th>
                         <th scope="col">Rack</th>
-                        <th scope="col">Editar</th>  
+                        <th scope="col">Clientes</th>  
 
                       </tr>
                     </thead>
                     <tbody>
                       <tr> {% for object in list_server %}
-                        <td>{{ object.name}}</td> 
-                        <td>{{ object.tipe}}</td>
-                        <td>{{ object.num_interface}}</td>
-                        <td>{{ object.virtual|yesno:'Virtualizado,No Virtualizado'}}</td> 
-                        <td>{{ object.platform}}</td>
-                        <td>{{ object.system_operative}}</td>
-                        <td>{{ object.model}}</td>
-                        <td>{{ object.service}}</td>
-                        <td>{{ object.city}}</td>
-                        <td>{{ object.seat}}</td>
-                        <td>{{ object.rack}}</td>
-                        <td><a class="btn" href="{% url 'list:editserver' object.id %}"><i class="material-icons md-18">edit</i></a>
-                            <a class="btn" href="{% url 'list:detailserver' object.id %}"><i class="material-icons md-18">details</i></a></td>
-                        
+                        <td>{{ object.server.name }}</td> 
+                        <td>{{ object.server.num_interface}}</td>
+                        <td>{{ object.interface}}</td>
+                        <td>{{ object.server.virtual|yesno:'Virtualizado,No Virtualizado'}}</td> 
+                        <td>{{ object.server.platform.name_platform}}</td>
+                        <td>{{ object.server.system_operative}}</td>
+                        <td>{{ object.server.model}}</td>
+                        <td>{{ object.server.service}}</td>
+                        <td>{{ object.server.city}}</td>
+                        <td>{{ object.server.seat}}</td>
+                        <td>{{ object.server.rack}}</td>
+                        <td>{{ object.client.name}}</td>
                       </tr> {% endfor %}
                     </tbody>
                 </table>

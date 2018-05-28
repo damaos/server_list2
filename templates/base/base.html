@@ -1,0 +1,165 @@
+{% load staticfiles %} 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<title>{% block title %} Administración de servidores {% endblock %}</title>
+</head>
+<body>
+		<div class="{% block container-class %} container-general {% endblock %}">
+			<div class="row">
+				{% if request.user.is_authenticated %}
+				<div>
+				<div class="bg_home2">
+				</div>
+				<nav class="navbar navbar-default">
+						<div class="container-fluid">
+							<!-- Brand and toggle get grouped for better mobile display -->
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<a class="navbar-brand" href="{% url 'list:list' %}"><img src="" alt=""/></a>
+							</div>
+					
+							<!-- Collect the nav links, forms, and other content for toggling -->
+							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+								<ul class="nav navbar-nav">
+									{% if request.user.username == "admin" %}
+									<li><p style="color:white">Bienvenido <span class="username"><b><a href="#" style="color:white"> {{request.user.username}} </a></b></span></p></li>
+									{% else %}
+									<li><p style="color:white">Bienvenido <span class="username"><b><a href="{% url 'application:new_objective' %}" style="color:white"> {{request.user.first_name}} {{request.user.last_name}} </a></b></span></p></li>
+									{% endif %}
+									{% if perms.application.add_objective %}
+									<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración<span class="caret"></span></a>
+										<ul class="dropdown-menu">
+											<li><a href="{% url 'application:new_objective' %}">Administración objetivos</a></li>
+										</ul>
+									</li>
+									{% endif %}
+									{% if perms.auth.add_user %}
+									<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Maestras<span class="caret"></span></a>
+										<!--	<ul class="dropdown-menu">
+												<li><a href="{% url 'application:new_area' %}">Dirección/Gerencia</a></li>
+												<li><a href="{% url 'application:user' %}">Usuarios</a></li>
+												<li><a href="{% url 'application:new_perspective' %}">Perspectivas</a></li>
+												<li><a href="{% url 'application:new_objective_strategic'%}">Objetivos estratégicos</a>
+												<li><a href="{% url 'application:new_BSC'%}">Balanced Scorecard</a>	
+												<li><a href="{% url 'application:new_master_objective'%}">Objetivos base</a>
+									
+											</ul> -->
+									</li>
+									
+									<li><a href="{% url 'application:logs' %}">Log de actividades</a></li>
+									{% endif %}
+									<li><a href="{% url 'login:logout' %}" id="logout">Cerrar sesión</a></li>
+								</ul>
+							</div><!-- /.navbar-collapse -->
+						</div><!-- /.container-fluid -->
+					</nav>
+				</div>
+				{% endif %}
+				<div>
+				{% if messages %}
+					{% for message in messages%}
+					<div class="alert alert-{{ message.tags }}"><a class="close" data-dismiss="alert" href="#">&times;</a>{{ message }}</div>
+					{% endfor %}
+				{% endif %}
+				{% block content %}
+				<h4>Bloque de contenido</h4>
+				{% endblock %}
+				</div>
+			</div>
+		</div>
+		<footer class="homefo">
+                Copyright 2018 Medellín | Colombia | Gerencia de Ingeniería y Desarrollo Emtelco S.A.S
+        </footer>
+        
+        <script type="text/javascript">        
+        {% if messages %}
+		{% for message in messages %}
+		    {% if message.tags == 'success' %}
+		    		var title = '{{message}}'.indexOf('eliminado')>-1?'Registro eliminado':'Correcto';
+		            swal({
+		              title: title,
+		              text: '{{ message }}',
+		              type: 'success',
+		              timer: 2000,
+		              confirmButtonText: 'Aceptar'
+		            });
+		    
+		   {% elif message.tags == 'error' %}
+		    		$('.collapse').addClass('in');
+		            swal({
+		              title: 'Se ha producido un error',
+		              text: '{{ message }}',
+		              type: 'warning',
+		              timer: 2000,
+		              confirmButtonText: 'Aceptar'
+		            });
+		            
+		     {% else%}
+		    
+		            swal({
+		              title: 'Se ha producido un error',
+		              text: '{{ message }}',
+		              type: 'error',
+		              timer: 2000,
+		              confirmButtonText: 'Aceptar'
+		            });
+		    
+		    {% endif%}
+		{% endfor %}
+		{% endif %}
+        
+        $('.form_date').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language:  'es',
+            weekStart: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            startDate: '+0d',
+            endDate: '+365d'
+        });
+        
+        $('.form_date_export').datetimepicker({
+	    	format: 'yyyy-mm-dd',
+            language:  'es',
+            weekStart: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+	    });
+		
+        
+        $('#id_year_of_performance').datetimepicker({
+        	language:  'es',
+						format: " yyyy",
+						
+					
+            
+				}); 
+				
+				$("#logout").on('click', function(){
+					SessionStorage.removeItem("bsc");
+				});
+        
+				</script>
+				
+	<script src="{% static 'admin/js/plugin.js' %}"></script>
+	<script src="{% static 'admin/js/script.js' %}"></script>
+</body>
+</html>

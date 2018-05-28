@@ -1,0 +1,55 @@
+
+{% block container-class %} {% endblock %}
+<meta charset="UTF-8">
+<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>{% block title %} Administracion de servidores {% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+{% block content %}
+	<header class="loginhe">
+	      <img src="" alt=""/>
+	</header>
+<div>
+		<div class="bg_login"></div>
+		<div class="position">
+            <div class="login text-center">
+                <div class="">
+                    <div class="row">
+                       <img src="" alt="">
+                        <form method="post" action="{% url 'login:login' %}" id="login" role="form">{% csrf_token %}
+                           <div class="col-md-12 title">
+							   <h2>Bienvenido</h2>
+                               <h5>Ingresa tus <span class="color-blue">Datos</span></h5>
+                           </div><br>
+	                       <div class="form-group form-login col-md-12">
+	                       		<input class="form-control text-center" type="text" name="username" placeholder="Ingresar nombre de usuario" maxlength="30">
+							</div>
+							<div class="form-group form-login col-md-12">
+					            <input class="form-control text-center" type="password" name="password" placeholder="Ingresar contraseña" maxlength="20">
+			        		</div>
+						        {% if messages %} <br />
+						         {% for message in messages %}
+						            <label style="color:red">{{ message }}</label>
+						         {% endfor %} 
+						        {% endif %}
+						        
+						    <div class="form-group form-login col-md-12">
+						     	<button class="btn btn-login col-md-12" id="btningresar">Ingresar</button>
+			        		</div>
+						                                
+					     </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+		<footer class="footer-lg">
+                Copyright © 2018 Medellín | Colombia | Gerencia de Ingeniería y Desarrollo Emtelco S.A.S
+        </footer>
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/base.css' %}"> 
+    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <title>{% block title %} Administración de servidores {% endblock %}</title>
+</head>
+<body> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand"> Bievenido {{request.user.first_name}} {{request.user.last_name}}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'list:list' %}">Inicio<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="btn" id="confirm">Salir<span class="sr-only">(current)</span></a> 
+                </li>  
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administrar
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
+                    <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion</a>
+                    <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
+                    <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
+                    <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
+
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0"  method="GET">
+                    <input type='text' name='q' id="q" placeholder='¿Qué desea buscar?' value='{{request.GET.q}}'class="form-control search"/>
+                    <input type="submit" value="Buscar" class="btn">
+                </form>
+            </div>
+            </nav> <br>
+            <div class="text-center">
+            <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Numero de interfaces</th>
+                        <th scope="col">Virtualizacion</th>
+                        <th scope="col">Plataforma</th> 
+                        <th scope="col">Sistema</th> 
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Servicio</th>
+                        <th scope="col">Ciudad</th>
+                        <th scope="col">Sede</th>
+                        <th scope="col">Rack</th>
+                        <th scope="col">Editar</th>  
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr> {% for object in list_server %}
+                        <td>{{ object.name}}</td> 
+                        <td>{{ object.tipe}}</td>
+                        <td>{{ object.num_interface}}</td>
+                        <td>{{ object.virtual|yesno:'Virtualizado,No Virtualizado'}}</td> 
+                        <td>{{ object.platform}}</td>
+                        <td>{{ object.system_operative}}</td>
+                        <td>{{ object.model}}</td>
+                        <td>{{ object.service}}</td>
+                        <td>{{ object.city}}</td>
+                        <td>{{ object.seat}}</td>
+                        <td>{{ object.rack}}</td>
+                        <td><a  class="btn" href="{% url 'list:editserver' object.id %}"><i class="material-icons md-18">edit</i></a></td>
+                        
+                      </tr> {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                <script>
+                        $('#confirm').on('click', function(){
+                            swal({
+                                title: "Estás seguro de salir?",
+                                icon: "warning",
+                                buttons: true,
+                                dangerMode: true,
+                                })
+                                .then((willDelete) => {
+                                if (willDelete) {
+                                    window.location.href = "{% url 'login:logout' %}";
+                                } 
+                                else {
+                                }
+                        });
+                    });
+                </script>                
+</body>
+</html>

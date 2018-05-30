@@ -8,7 +8,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>{% block title %} Administracion de servidores {% endblock %}</title>
 	<link rel="stylesheet" href="{% static '/css/base.css' %}"> 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
@@ -21,11 +25,14 @@
             <div class="login text-center">
                 <div class="">
                     <div class="row">
-                       <img src="" alt="">
+					   <img src="" alt="">
+					   <div class="container">
                         <form method="post" action="{% url 'login:login' %}" id="login" role="form">{% csrf_token %}
                            <div class="col-md-12 title">
 							   <h2>Bienvenido</h2>
-                               <h5>Ingresa tus <span class="color-blue">Datos</span></h5>
+							   <div>
+							   <h5>Ingresa tus Datos</h5>
+							</div>
                            </div><br>
 	                       <div class="form-group form-login col-md-12">
 	                       		<input class="form-control text-center" type="text" name="username" placeholder="Ingresar nombre de usuario" maxlength="30">
@@ -39,13 +46,14 @@
 						         {% endfor %} 
 						        {% endif %}
 						        
-						    <div class="form-group form-login col-md-12">
+						    <div class="center-align">
 						     	<button class="btn btn-login col-md-12" id="btningresar">Ingresar</button>
 			        		</div>
 						                                
 					     </div>
 
-                        </form>
+						</form>
+						</div>
                     </div>
                 </div>
             </div>

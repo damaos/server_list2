@@ -20,7 +20,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
 
 form#login {
     margin-top: 400px;
-    margin-left: 1100px;
+    margin-left: 1000px;
 }
 
 footer{
@@ -40,5 +40,27 @@ footer{
 
 
 
-div.grid-block{background-image: url("/static/images/fondo3.jpg");background-repeat: no-repeat;background-size: cover; height: 100vh; background-repeat: no-repeat; background-position: center center;}
+div.grid-block{
+    background-image: url("/static/images/fondo3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; 
+    height: 100vh; 
+    background-repeat: no-repeat; 
+    background-position: center center;
+}
 
+button#btningresar {
+    background-color: #e0e0e0;
+    color: black;
+}
+
+input.form-control.text-center {
+    border: 1px solid;
+    text-align: center;
+}
+h5 {
+    text-align: center;
+}
+h2 {
+    text-align: center;
+}

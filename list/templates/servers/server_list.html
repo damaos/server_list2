@@ -38,14 +38,12 @@
                     Administrar
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
-                    <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion</a>
-                    <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
-                    <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
-                    <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
-
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
+                            <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
+                            <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
+                            <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
+                            <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
+                            <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
                     </div>
                 </li>
                 </ul>
@@ -70,8 +68,8 @@
                         <th scope="col">Ciudad</th>
                         <th scope="col">Sede</th>
                         <th scope="col">Rack</th>
-                        <th scope="col">Editar</th>  
-
+                        <th scope="col">Editar</th>
+                        <th escope="col">Ver</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -87,9 +85,8 @@
                         <td>{{ object.city}}</td>
                         <td>{{ object.seat}}</td>
                         <td>{{ object.rack}}</td>
-                        <td><a class="btn" href="{% url 'list:editserver' object.id %}"><i class="material-icons md-18">edit</i></a>
-                            <a class="btn" href="{% url 'list:detailserver' object.id %}"><i class="material-icons md-18">details</i></a></td>
-                        
+                        <td><a class="btn" href="{% url 'list:editserver' object.id %}"><i class="material-icons md-18">edit</i></a></td>
+                        <td> <a class="btn" href="{% url 'list:detailserver' object.id %}"><i class="material-icons md-18">visibility</i></a></td>
                       </tr> {% endfor %}
                     </tbody>
                 </table>

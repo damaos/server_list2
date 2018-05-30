@@ -37,12 +37,12 @@
                     Administrar
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
-                        <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
-                        <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
-                        <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
-                        <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
-                        <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
+                    <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
+                    <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
+                    <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
+                    <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
+                    <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
+                    <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
                     </div>
                 </li>
                 </ul>
@@ -57,7 +57,7 @@
                         {% csrf_token %}
                             <div class="row">		          
                                 {% for field in form %}
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <label for="{{field.name}}">{{field.label}}</label><br>
                                         {{field}}
                                         {% for error in field.errors %}
@@ -70,7 +70,7 @@
                             </div>
                             <div class="text-center"><br>
                                     <button class="btn btn-ingresar" type="submit">Guardar</button>
-                                     <a class="btn  btn-outline-danger"  href="{% url 'list:newinterface'  %}" role="button">Cancelar</a>
+                                     <a class="btn  btn-outline-danger"  href="{% url 'list:newassignclient'  %}" role="button">Cancelar</a>
                             </div>
                     </form>      
             </div><br>
@@ -79,18 +79,16 @@
                     <table class="table">
                             <thead class="thead-dark">
                               <tr>
-                                <th>Nombre Interfaz</th>
-                                <th>IP</th>
-                                <th>Puerto</th>
-                                <th>Editar </th>
+                                <th>Nombre Servidor</th>
+                                <th>Clientes</th>
+                                <th>Edita la asignacion correspondiente</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr> {% for object in list_inter %}
-                                    <td>{{ object.name_interface }}</td>
-                                    <td>{{ object.ip }}</td> 
-                                    <td>{{ object.port }}</td>
-                                    <td><a class="btn" href="{% url 'list:editinterface' object.id %}"><i id="material" class="material-icons md-18">edit</i></td>   
+                              <tr> {% for object in list_assignC %}
+                                    <td>{{ object.server.name}}</td> 
+                                    <td>{{ object.client.name}} </td>
+                                    <td><a class="btn" href="{% url 'list:editassignclient' object.id %}"><i id="material" class="material-icons md-18">edit</i></td></td>   
                                 
                               </tr> {% endfor %}
                             </tbody>

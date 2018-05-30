@@ -1,5 +1,5 @@
 from django import forms
-from .models import Server, Client, Asignacion, Interface, Platform
+from .models import Server, Client, Asignacion, Interface, Platform, AsignacionCliente
 
 class ServerForm(forms.ModelForm):
 
@@ -27,11 +27,11 @@ class AsignacionForm(forms.ModelForm):
 
     class Meta:
         model = Asignacion
-        fields = ['server','interface','client'] 
+        fields = ['server','interface',] 
         widgets = { 
              'server': forms.Select(attrs={'class': 'form-control '}),
              'interface': forms.Select(attrs={'class': 'form-control '}),
-             'client': forms.Select(attrs={'class': 'form-control '}),
+
          }
 
 class ClientForm(forms.ModelForm):
@@ -50,10 +50,11 @@ class InterfaceForm(forms.ModelForm):
     
     class Meta:
         model = Interface
-        fields = ['name_interface', 'is_asignada'] 
+        fields = ['name_interface','ip', 'port', 'is_asignada'] 
         widgets = { 
-             'name_interface': forms.TextInput(attrs={'class': 'form-control '}),
-            
+            'name_interface': forms.TextInput(attrs={'class': 'form-control '}),
+            'ip': forms.TextInput(attrs={'class': 'form-control '}),  
+            'port': forms.TextInput(attrs={'class': 'form-control '}),      
          }
 
 class PlatformForm(forms.ModelForm):
@@ -85,3 +86,14 @@ class ServerEditForm(forms.ModelForm):
             'rack': forms.TextInput(attrs={'class': 'form-control '}),
             'observation': forms.Textarea(attrs={'class': 'form-control ', 'rows': 4,  }),
         }        
+
+
+class AsignacionClienteForm(forms.ModelForm):
+    
+    class Meta:
+        model = AsignacionCliente
+        fields = ['server', 'client'] 
+        widgets = { 
+             'server': forms.Select(attrs={'class': 'form-control '}),
+             'client': forms.Select(attrs={'class': 'form-control '}),
+         }

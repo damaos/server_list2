@@ -37,15 +37,13 @@
                     Administrar
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
-                    <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion</a>
-                    <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
-                    <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
-                    <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
-
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
+                        <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
+                        <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
+                        <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
+                        <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
+                        <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
+                        <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
+                </div>
                 </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0"  method="GET">
@@ -64,7 +62,7 @@
             {% csrf_token %}
                 <div class="row">		          
                     {% for field in form %}
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <label for="{{field.name}}">{{field.label}}</label><br>
                             {{field}}
                             {% for error in field.errors %}
@@ -86,10 +84,14 @@
         <table class="table">
                 <thead class="thead-dark">
                 <th>Nombre Interfaz</th>
+                <th>IP</th>
+                <th>Puerto</th>
                 <th>Editar</th>
             </tr>
                 <tr>{% for object in list_inter %}
                     <td>{{ object.name_interface}} </td>
+                    <td>{{ object.ip }}</td>
+                    <td>{{object.port }}</td>
                     <td><a class="btn" href="{% url 'list:editinterface' object.id %}"><i id="material" class="material-icons md-18">edit</i></td></td>       
                 </tr> {% endfor %}
         </table>

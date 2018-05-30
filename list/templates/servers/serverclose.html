@@ -1,0 +1,35 @@
+<table class="table">
+    <thead class="thead-dark">
+      <tr>  
+        <th scope="col">Nombre</th>
+        <th scope="col">Numero de interfaces</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Virtualizacion</th>
+        <th scope="col">Plataformas</th> 
+        <th scope="col">Sistema</th> 
+        <th scope="col">Modelo</th>
+        <th scope="col">Servicio</th>
+        <th scope="col">Ciudad</th>
+        <th scope="col">Sede</th>
+        <th scope="col">Rack</th>
+        <th scope="col">Clientes</th>  
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr> {% for object in list_server %}
+        <td>{{ object.server.name }}</td> 
+        <td>{{ object.server.num_interface}}</td>
+        <td>{{ object.interface}}</td>
+        <td>{{ object.server.virtual|yesno:'Virtualizado,No Virtualizado'}}</td> 
+        <td>{{ object.server.platform.name_platform}}</td>
+        <td>{{ object.server.system_operative}}</td>
+        <td>{{ object.server.model}}</td>
+        <td>{{ object.server.service}}</td>
+        <td>{{ object.server.city}}</td>
+        <td>{{ object.server.seat}}</td>
+        <td>{{ object.server.rack}}</td>
+        <td>{{ object.client.name}}</td>
+      </tr> {% endfor %}
+    </tbody>
+</table>

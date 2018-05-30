@@ -20,8 +20,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 
 
-from .forms import ServerForm, AsignacionForm, ClientForm, PlatformForm, InterfaceForm, ServerEditForm
-from .models import Server, Asignacion, Client, Platform, Interface
+from .forms import ServerForm, AsignacionForm, ClientForm, PlatformForm, InterfaceForm, ServerEditForm, AsignacionClienteForm
+from .models import Server, Asignacion, Client, Platform, Interface, AsignacionCliente
 
 
  # vista que permite traer una lista de servidores 
@@ -573,20 +573,20 @@ class ServerDetailView(View):
         '''
         query = request.GET.get("q")
         sort = request.GET.get("sort", 'name')
-        asearch = Asignacion.objects.filter(id=kwargs['id']).first()
+        asearch = Asignacion.objects.filter(server=kwargs['id']).first()
         form = AsignacionForm(instance=asearch)
-        list_server = None
+        list_asignacion = None
         if query:
-            list_server = Asignacion.objects.filter(
+            list_asignacion = Asignacion.objects.filter(
                 Q(server__name__icontains=query)      
             )
         else:
-            list_server = Asignacion.objects.all()
-        
+            list_asignacion = Asignacion.objects.filter(server=kwargs['id'])
+
         page =request.GET.get("page")
         output = {
             'form': form,
-            'list_server': list_server
+            'list_asignacion': list_asignacion
         }
         return render(request, self.template_name, output)
 
@@ -609,6 +609,110 @@ class ServerDetailView(View):
         }
         
         return render(request, self.template_name, output) 
+
+
+# clase para crear una nueva asignacion de los clientes
+class NewAssignClientView(View):
+    '''
+    Clase para crear una asignacion de los clientes
+    '''
+    template_name = 'assignations_client/new_assign.html'
+    
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        '''
+        Método get
+        '''
+        query = request.GET.get("q")
+        sort = request.GET.get("sort", 'name')
+        form = AsignacionClienteForm()
+        list_assignC = None
+        if query:
+            list_assignC = AsignacionCliente.objects.filter(
+                Q(server__name__icontains=query) |
+                Q(client__name__icontains=query) 
+            )
+        else:
+            list_assignC = AsignacionCliente.objects.all()
+        page =request.GET.get("page")
+        output = {
+            'form': form,
+            'list_assignC': list_assignC
+        }
+        return render(request, self.template_name, output)
+
+    @method_decorator(login_required)  
+    def post(self, request, *args, **kwargs):
+        '''
+        Método post
+        '''
+        
+        form = AsignacionClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/assignClient/new')    
+
+        output = {
+            'form': form,
+            'messages': "Revise los campos correctamente.",
+        }
+        
+        return render(request, self.template_name, output) 
+
+
+
+# clase para editar una asignacion de los clientes
+class AssignClientEditView(View):
+    '''
+    Clase para editar las asignaciones de los clientes
+    '''
+    template_name = 'assignations_client/edit_assign.html'
+    
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        '''
+        Método get
+        '''
+        query = request.GET.get("q")
+        sort = request.GET.get("sort", 'name')
+        asearch = AsignacionCliente.objects.filter(id=kwargs['id']).first()
+        form = AsignacionClienteForm(instance=asearch)
+        list_assignC = None
+        if query:
+            list_assignC = AsignacionCliente.objects.filter(
+                Q(server__name__icontains=query) |
+                Q(client__name__icontains=query) 
+            )
+        else:
+            list_assignC = AsignacionCliente.objects.all()
+        
+        page =request.GET.get("page")
+        output = {
+            'form': form,
+            'list_assignC': list_assignC
+        }
+        return render(request, self.template_name, output)
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        '''
+        Método post
+        '''
+        asearch = AsignacionCliente.objects.filter(id=kwargs['id']).first()
+        form = AsignacionClienteForm(request.POST, instance=asearch)
+        list_assignC = AsignacionCliente.objects.all()
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/assignClient/new')    
+
+        output = {
+            'form': form,
+            'list_assignC': list_assignC,
+            'messages': "Revise los campos correctamente.",
+        }
+        
+        return render(request, self.template_name, output) 
+
 
 
 

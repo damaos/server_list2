@@ -53,7 +53,7 @@
             </div>
             </nav> <br>
     <div class="text-center">
-            <h1> <span class="badge badge-secondary">Nuevo Cliente</span></h1>
+            <h1> <span class="badge badge-secondary">Asignar Clientes</span></h1>
             
     </div>
     <br><br>
@@ -62,7 +62,7 @@
             {% csrf_token %}
                 <div class="row">		          
                     {% for field in form %}
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="{{field.name}}">{{field.label}}</label><br>
                             {{field}}
                             {% for error in field.errors %}
@@ -75,28 +75,31 @@
                 </div>
                 <div class="text-center"><br>
                         <button class="btn btn-ingresar" type="submit">Guardar</button>
-                        <a class="btn  btn-outline-danger" href="{% url 'list:list' %}" role="button">Cancelar</a> 
+                        <a class="btn  btn-outline-danger" href="{% url 'list:list' %}" role="button">Cancelar</a>
                 </div>
         </form>      
 </div><br>
-<div class="text-center">
-    <div class="container ">
-        <table class="table">
-                <thead class="thead-dark">
-                <th>Nombre Cliente</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Editar</th>
-            </tr>
-                <tr>{% for object in list_client %}
-                    <td>{{ object.name}} </td>
-                    <td>{{ object.phone }} </td>
-                    <td>{{ object.email}} </td> 
-                    <td><a class="btn" href="{% url 'list:editclient' object.id %}"><i id="material" class="material-icons md-18">edit</i></td></td>       
-                </tr> {% endfor %}
-        </table>
-    </div>
-</div>
+<div class="container">
+        <div class="text-center">
+                <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th>Nombre Servidor</th>
+                            <th>Clientes</th>
+                            <th>Edita la asignacion correspondiente</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr> {% for object in list_assignC %}
+                                <td>{{ object.server.name}}</td> 
+                                <td>{{ object.client.name }}</td>
+                                <td><a class="btn"  href="{% url 'list:editassignclient' object.id %}"><i id="material" class="material-icons md-18">edit</i></td></td>   
+                            
+                          </tr> {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                </div>
 <footer class="page-footer">
         <div class="container">
             <div class="row">

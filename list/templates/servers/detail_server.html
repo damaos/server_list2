@@ -38,14 +38,13 @@
                     Administrar
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
-                    <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion</a>
-                    <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
-                    <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
-                    <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
-
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
+                        <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
+                        <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
+                        <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
+                        <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
+                        <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
+                  
                     </div>
                 </li>
                 </ul>
@@ -56,42 +55,22 @@
             </div>
             </nav> <br>
             <div class="text-center">
-            <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Numero de interfaces</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Virtualizacion</th>
-                        <th scope="col">Plataformas</th> 
-                        <th scope="col">Sistema</th> 
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Servicio</th>
-                        <th scope="col">Ciudad</th>
-                        <th scope="col">Sede</th>
-                        <th scope="col">Rack</th>
-                        <th scope="col">Clientes</th>  
-
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr> {% for object in list_server %}
-                        <td>{{ object.server.name }}</td> 
-                        <td>{{ object.server.num_interface}}</td>
-                        <td>{{ object.interface}}</td>
-                        <td>{{ object.server.virtual|yesno:'Virtualizado,No Virtualizado'}}</td> 
-                        <td>{{ object.server.platform.name_platform}}</td>
-                        <td>{{ object.server.system_operative}}</td>
-                        <td>{{ object.server.model}}</td>
-                        <td>{{ object.server.service}}</td>
-                        <td>{{ object.server.city}}</td>
-                        <td>{{ object.server.seat}}</td>
-                        <td>{{ object.server.rack}}</td>
-                        <td>{{ object.client.name}}</td>
-                      </tr> {% endfor %}
-                    </tbody>
-                </table>
+                <h1> <span class="badge badge-secondary">Detalle del Servidor</span></h1>
+             </div>
+             <br><br>
+             {% for object in list_asignacion %}
+            <div class="text-center">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ object.server.name }}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+                  </div>
             </div>
+            {% endfor %}
                 <script>
                         $('#confirm').on('click', function(){
                             swal({

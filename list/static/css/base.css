@@ -10,3 +10,35 @@ a.btn {
     color: black;
 }
 
+nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+    margin-top: 10px;
+}
+
+nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+    margin-top: 10px;
+}
+
+form#login {
+    margin-top: 400px;
+    margin-left: 1100px;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-top: 100px;
+    text-align: center;
+    color: black;
+}
+.footer{
+    padding: 5px;
+    background: #26348c;
+    box-shadow: 0 0 10px black;
+    color: white;
+}
+
+
+
+div.grid-block{background-image: url("/static/images/fondo3.jpg");background-repeat: no-repeat;background-size: cover; height: 100vh; background-repeat: no-repeat; background-position: center center;}
+

@@ -23,6 +23,8 @@ class Client(models.Model):
 #  Interfaz
 class Interface(models.Model):
     name_interface = models.CharField('Nombre interfaz', max_length=255, unique=True)
+    ip =  models.CharField('IP', max_length=250, unique=True)
+    port = models.CharField('Puerto', max_length=255,)
     is_asignada = models.BooleanField('Estado de Asignacion', default=False)
 
     def __str__(self):
@@ -75,9 +77,18 @@ class Server(models.Model):
 class Asignacion(models.Model):
     server = models.ForeignKey(Server, verbose_name= 'Servidor', on_delete=models.CASCADE)
     interface = models.ForeignKey(Interface, verbose_name = 'Interfaz', on_delete=models.CASCADE,)
-    client = models.ForeignKey(Client, verbose_name= 'Cliente', on_delete=models.CASCADE,)
 
     class Meta:
         ordering = ('id',)
         verbose_name_plural = 'Asignaciones'
         verbose_name = 'Asignacion'
+
+
+class AsignacionCliente(models.Model):
+    server = models.ForeignKey(Server, verbose_name= 'Servidor', on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, verbose_name= 'Cliente', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('id',)
+        verbose_name_plural = 'Asignacion de Clientes'
+        verbose_name = 'Asignacion de Cliente'

@@ -5,3 +5,22 @@ i#material {
     }
     
 }
+
+form#login {
+    margin-top: 300px;
+    margin-left: 400px;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+.footer{
+    padding: 5px;
+    background: #26348c;
+    box-shadow: 0 0 10px black;
+    color: white;
+}
+

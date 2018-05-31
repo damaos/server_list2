@@ -19,7 +19,7 @@
 </head>
 <body> 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand"> Bievenido {{request.user.first_name}} {{request.user.last_name}}</a>
+            <a class="navbar-brand"> Bienvenido {{request.user.first_name}} {{request.user.last_name}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -86,12 +86,14 @@
                 <th>Nombre Interfaz</th>
                 <th>IP</th>
                 <th>Puerto</th>
+                <th>Estado de asignacion </th>
                 <th>Editar</th>
             </tr>
                 <tr>{% for object in list_inter %}
                     <td>{{ object.name_interface}} </td>
                     <td>{{ object.ip }}</td>
-                    <td>{{object.port }}</td>
+                    <td>{{ object.port }}</td>
+                    <td>{{ object.is_asignada|yesno:'Asignada,No Asignada' }}</td>
                     <td><a class="btn" href="{% url 'list:editinterface' object.id %}"><i id="material" class="material-icons md-18">edit</i></td></td>       
                 </tr> {% endfor %}
         </table>

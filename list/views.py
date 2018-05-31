@@ -34,24 +34,29 @@ class ServerList(ListView):
         metodo get 
         '''
         query = request.GET.get("q")
-        sort = request.GET.get("sort", 'name')
+        sort =  "activo"
         list_server = None
         if query:
-            list_server = Server.objects.filter(
-                Q(name__icontains=query) |
-                Q(tipe__icontains=query) |
-                Q(num_interface__icontains=query) |
-                Q(virtual__icontains=query)|
-                Q(platform__name_platform__icontains=query)|
-                Q(system_operative__icontains=query)|
-                Q(model__icontains=query)|
-                Q(service__icontains=query)|
-                Q(city__icontains=query)|
-                Q(seat__icontains=query) |
-                Q(rack__icontains=query)     
-            )
+            if query.lower().strip() == 'activo':
+                list_server = Server.objects.filter(Q(is_active__icontains = 1))
+            elif query.lower().strip() == 'inactivo':
+                list_server = Server.objects.filter(Q(is_active__icontains = 0)) 
+            else:      
+                list_server = Server.objects.filter(
+                    Q(name__icontains=query) |
+                    Q(tipe__icontains=query) |
+                    Q(num_interface__icontains=query) |
+                    Q(virtual__icontains=query)|
+                    Q(platform__name_platform__icontains=query)|
+                    Q(system_operative__icontains=query)|
+                    Q(model__icontains=query)|
+                    Q(service__icontains=query)|
+                    Q(city__icontains=query)|
+                    Q(seat__icontains=query) |
+                    Q(rack__icontains=query)     
+            ).order_by('is_active')
         else:
-            list_server = Server.objects.all()
+            list_server = Server.objects.filter(is_active='True')
         page =request.GET.get("page")
         output = {
             'list_server': list_server
@@ -120,7 +125,7 @@ class NewAssignView(View):
                 Q(client__name__icontains=query) 
             )
         else:
-            list_assign = Asignacion.objects.all()
+            list_assign = Asignacion.objects.filter()
         page =request.GET.get("page")
         output = {
             'form': form,

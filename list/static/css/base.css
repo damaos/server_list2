@@ -10,20 +10,13 @@ a.btn {
     color: black;
 }
 
-nav.navbar.navbar-expand-lg.navbar-light.bg-light {
-    margin-top: 10px;
-}
-
-nav.navbar.navbar-expand-lg.navbar-light.bg-light {
-    margin-top: 10px;
-}
 
 form#login {
     margin-top: 400px;
     margin-left: 1000px;
 }
 
-footer{
+footer {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -40,7 +33,7 @@ footer{
 
 
 
-div.grid-block{
+div.grid-block {
     background-image: url("/static/images/fondo3.jpg");
     background-repeat: no-repeat;
     background-size: cover; 
@@ -48,9 +41,26 @@ div.grid-block{
     background-repeat: no-repeat; 
     background-position: center center;
 }
+div.grid-block-p {
+    background-image: url("/static/images/laptop.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; 
+    height: 110vh; 
+    background-repeat: no-repeat; 
+    background-position: center center;
+}
+
+div.grid-block-p-detail {
+    background-image: url("/static/images/laptop.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; 
+    height: 145vh; 
+    background-repeat: no-repeat; 
+    background-position: center center;
+}
 
 button#btningresar {
-    background-color: #e0e0e0;
+    background-color: transparent;
     color: black;
 }
 
@@ -63,4 +73,61 @@ h5 {
 }
 h2 {
     text-align: center;
+}
+
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+  }
+
+div#contenedor {
+    margin-left: auto;
+}
+
+td {
+    background-color: #eeeeee;
+    border-radius: 4px;
+
+}
+
+.col-md-6 {
+    background-color: #eeeeee;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+div.col-md-12 {
+    background-color: #eeeeee;
+    padding-bottom: 10px;
+    border-radius: 5px;
+}
+
+.col-md-4 {
+    background-color: #eeeeee;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+
+a#volver {
+    margin-left: 44pc;
+    margin-top: 20px;
+    text-align: left;
+    background-color: #757575; 
+}
+
+button.btn.waves-effect.waves-light {
+    background-color: #757575;
+}
+
+
+div#contenedor2 {
+    margin-left: 700px;
+    margin-top: 270px;
 }

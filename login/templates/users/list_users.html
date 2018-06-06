@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Administracion de Servidores</title>
+    <link rel="stylesheet" href="{% static '/css/base.css' %}">     
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</head>
+<body>
+   <div class="titlle_div">
+                <h5 class="titlehome">Registro de usuarios</h5>
+            </div>
+            <div class="container">
+                <div class="container_base_info">
+                            <form method="post" novalidate>{% csrf_token %}
+                                <div class="row">
+                                        <div class="form-group  col-md-3">
+                                            <label class="control-label">{{form.username.label}}</label>
+                                            {{form.username}}
+                                            <label style="color:red">{{form.username.errors}}</label>
+                                        </div>
+                                        <div class="form-group  col-md-4">
+                                            <label class="control-label">{{form.profile.label}}</label>
+                                            {{form.profile }}
+                                            <label style="color:red">{{form.profile.errors}}</label>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-4">
+                                        
+                                        <button class="btn btn-ingresar col-md-12" value="Guardar" type="submit">Guardar</button>
+                                        </div>	
+                                                                        
+                                </div>
+                            </form>
+                        </div>            
+                    <br><br>
+                    <form method="GET" class="search" >
+                        <div class="col-md-2 float">
+                        <p>Mostrar por página</p>
+                        <select class="selectpicker form-control" id="val">
+                            <option value=''>----</option>	
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                        <input type="hidden" id="query_select" name="query_select" />
+                        </div>
+                        <div class="col-md-6 float margin">
+                            <input type='text' name='q' id="q" placeholder='¿Qué desea buscar?' value='{{request.GET.q}}'class="form-control search"/>
+                            <input type="submit" value="Buscar" class="btn btn-search">
+                        </div>						        
+                    </form>
+                    <!--Inicio de la Tabla -->
+                        <table id="table-software" class="table table-striped table-bordered">
+                        <thead class="bluedark">
+                        <th> Usuario de red de Emtelco <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=idUsuario__username">
+                                            <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                            <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-idUsuario__username">
+                                            <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a>
+                                </th>
+                                <th> Nombres <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=idUsuario__first_name">
+                                                    <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                                    <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-idUsuario__first_name">
+                                                    <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a>
+                                
+                                </th>
+                                <th> Apellidos <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=idUsuario__last_name">
+                                            <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                            <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-idUsuario__last_name">
+                                            <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a> 
+                                        
+                                </td>
+                                <th> Cargo <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=cargo">
+                                    <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                    <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-cargo">
+                                    <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a>
+                                        
+                                </td>
+                                <th> Dirección/Gerencia <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=direction">
+                                        <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                        <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-direction">
+                                        <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a>
+                                        
+                                </td>
+                                <th> Perfil de usuario <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=idUsuario__groups">
+                                            <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                            <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-idUsuario__groups">
+                                            <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a>
+                                                        
+                                </th>
+                                <th> Estado <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=idUsuario__is_active">
+                                            <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                            <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-idUsuario__is_active">
+                                            <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a>
+                                                        
+                                </th>
+                                <th> Fecha de registro <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=idUsuario__date_joined">
+                                            <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                            <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-idUsuario__date_joined">
+                                            <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a>
+                                </th>
+                                <th> Último inicio de sesión <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=idUsuario__last_login">
+                                            <i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></a>
+                                            <a href="?{{ page_request_var }}={{ request.GET.page }}&q={{ request.GET.q }}&sort=-idUsuario__last_login">
+                                            <i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a>
+                                </th>
+                                <th> Editar </th>
+                            </thead>  
+                            <tbody>
+                                
+                            </tbody>
+                                                                        
+                        {% for user in users %}
+                            <tr>
+                            <td>{{user.idUsuario.username}}</td>
+                            <td>{{user.idUsuario.first_name}}</td>
+                            <td>{{user.idUsuario.last_name}}</td>
+                            <td>{{user.cargo}} </td>
+                            <td>{{user.direction}} </td>
+                            <td>{{user.idUsuario.groups.all.0}} </td>
+                            <td>{{user.idUsuario.is_active|yesno:'Activo,Inactivo'}} </td>
+                            <td>{{user.idUsuario.date_joined|date:'Y-m-d'}} </td>
+                            <td>{{user.idUsuario.last_login|date:'Y-m-d'}} </td>
+                                <td><a type="button"  onclick="editar('{%url 'login:edit_user' user.idUsuario.id%}')" class="btn btn-primary"> <span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" title="Editar"></span> </a></td>
+                            </tr>
+                            {% endfor %}
+                    </table>
+                    <!--Fin de la tabla -->
+                    <!-- Paginador -->
+                    <div>
+                        <div class="pagination">
+                            <span class="step-links">
+                            {% if users.has_previous %}
+                                <a href="?page={{ page_request_var }}{{ users.previous_page_number }}&q={{ request.GET.q }}">Anterior</a>
+                            {% endif %}
+                    
+                            <span class="current">
+                                Página {{ users.number }} de {{ users.paginator.num_pages }}.
+                            </span> {% if users.has_next %}
+                            <a href="?page={{ page_request_var }}{{ users.next_page_number }}&q={{ request.GET.q }}">Siguiente</a> {% endif %}
+                            </span>
+                        </div>
+                        </div>
+                        <!-- fin paginador -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#val').val({{info}})
+    
+    });	
+    $("#btn_generar").on('click', function(){
+        $("#query").val($("#q").val()) 
+        $("#softform").submit()
+        
+    });
+    
+    
+    jQuery("#val").on('change', function(evt) {
+        $("#query_select").val($("#val").val()) 
+        $(".search").submit()
+    });
+
+    function direction(url){
+        window.open(url, "ventana1", "scrollbars=NO,width=950,height=600");
+    }
+    function editar(url) {
+        window.open(url, "ventana1", "scrollbars=NO,width=950,height=600");
+    }
+
+    if (localStorage["IdArea"]) {
+        jQuery('#id_area').val(localStorage["IdArea"]);
+        window.localStorage.removeItem('IdArea');
+    }
+    </script>										
+                         
+    
+</body>
+</html>

@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
     <title>{% block title %} Administración de servidores {% endblock %}</title>
 </head>
-<body> 
+<body>
+<div class="grid-block-p">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand"> Bienvenido {{request.user.first_name}} {{request.user.last_name}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,12 +38,13 @@
                     Administrar
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
-                        <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
-                        <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
-                        <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
-                        <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
-                        <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
+                            <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
+                            <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
+                            <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
+                            <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
+                            <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
+                            <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
+                            
                     </div>
                 </li>
                 </ul>
@@ -52,6 +54,7 @@
                 </form>
             </div>
             </nav> <br>
+            
             <div class="container ">
                     <form class="col-md-12" enctype="multipart/form-data" method="POST" novalidate>
                         {% csrf_token %}
@@ -111,6 +114,7 @@
                         </div>
                     </div>
                 </footer>
+            </div>
                 <script>
                         $('#confirm').on('click', function(){
                             swal({

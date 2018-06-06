@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, HttpRequest, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.views.generic.detail import DetailView
 from django.core import serializers
+from django.urls import reverse
+from django.contrib.auth.models import Group
 import re
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
@@ -19,9 +24,13 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 
 
+import urllib
+import json
+
+
 
 from .forms import ServerForm, AsignacionForm, ClientForm, PlatformForm, InterfaceForm, ServerEditForm, AsignacionClienteForm
-from .models import Server, Asignacion, Client, Platform, Interface, AsignacionCliente
+from .models import Server, Asignacion, Client, Platform, Interface, AsignacionCliente 
 
 
  # vista que permite traer una lista de servidores 
@@ -580,18 +589,18 @@ class ServerDetailView(View):
         sort = request.GET.get("sort", 'name')
         asearch = Asignacion.objects.filter(server=kwargs['id']).first()
         form = AsignacionForm(instance=asearch)
-        list_asignacion = None
-        if query:
-            list_asignacion = Asignacion.objects.filter(
-                Q(server__name__icontains=query)      
-            )
-        else:
-            list_asignacion = Asignacion.objects.filter(server=kwargs['id'])
+        list_asignacion = Asignacion.objects.filter(server=kwargs['id'])
+        list_server = Server.objects.filter(id=kwargs['id'])
+        list_client = AsignacionCliente.objects.filter(server=kwargs['id'])
+        list_platform = Platform.objects.filter(id=kwargs['id'])
 
         page =request.GET.get("page")
         output = {
             'form': form,
-            'list_asignacion': list_asignacion
+            'list_asignacion': list_asignacion,
+            'list_server': list_server,
+            'list_client': list_client,
+            'list_platform': list_platform
         }
         return render(request, self.template_name, output)
 
@@ -717,7 +726,6 @@ class AssignClientEditView(View):
         }
         
         return render(request, self.template_name, output) 
-
 
 
 

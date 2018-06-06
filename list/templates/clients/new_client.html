@@ -18,6 +18,7 @@
     <title>{% block title %} Administración de servidores {% endblock %}</title>
 </head>
 <body> 
+    <div class="grid-block-p">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand"> Bienvenido {{request.user.first_name}} {{request.user.last_name}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,6 +120,7 @@
             </div>
         </div>
     </footer>
+</div>
     <script>
             $('#confirm').on('click', function(){
                 swal({

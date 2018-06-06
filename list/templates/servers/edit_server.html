@@ -17,15 +17,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
     <title>{% block title %} Administración de servidores {% endblock %}</title>
 </head>
-<body> 
+<body>
+    <div class="grid-block-p">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand"> Bienvenido {{request.user.first_name}} {{request.user.last_name}}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+        <a class="navbar-brand"> Bienvenido {{request.user.first_name}} {{request.user.last_name}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>   
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'list:list' %}">Inicio<span class="sr-only">(current)</span></a>
                 </li>
@@ -43,98 +43,94 @@
                         <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
                         <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
                         <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
-                
                     </div>
                 </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0"  method="GET">
-                    <input type='text' name='q' id="q" placeholder='¿Qué desea buscar?' value='{{request.GET.q}}'class="form-control search"/>
-                    <input type="submit" value="Buscar" class="btn">
-                </form>
+            </ul>
+            <form class="form-inline my-2 my-lg-0"  method="GET">
+                <input type='text' name='q' id="q" placeholder='¿Qué desea buscar?' value='{{request.GET.q}}'class="form-control search"/>
+                <input type="submit" value="Buscar" class="btn">
+            </form>
+        </div>
+    </nav><br>
+    <div class="container ">
+        <form class="col-md-12" enctype="multipart/form-data" method="POST" novalidate>
+            {% csrf_token %}
+            <div class="row">		          
+                {% for field in form %}
+                <div class="col-md-6">
+                    <label for="{{field.name}}">{{field.label}}</label><br>
+                    {{field}}
+                    {% for error in field.errors %}
+                    <ul>
+                        <li class="error">{{error}}</li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                {% endfor %}
             </div>
-            </nav> <br>
-            <div class="container ">
-                    <form class="col-md-12" enctype="multipart/form-data" method="POST" novalidate>
-                        {% csrf_token %}
-                            <div class="row">		          
-                                {% for field in form %}
-                                    <div class="col-md-6">
-                                        <label for="{{field.name}}">{{field.label}}</label><br>
-                                        {{field}}
-                                        {% for error in field.errors %}
-                                        <ul>
-                                            <li class="error">{{error}}</li>
-                                        </ul>
-                                        {% endfor %}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <div class="text-center"><br>
-                                    <button class="btn btn-ingresar" type="submit">Guardar</button>
-                                    <a class="btn  btn-outline-danger" href="{% url 'list:list' %}" role="button">Cancelar</a>
-                            </div>
-                    </form>      
-            </div><br>
-            <div class="container">
-            <div class="text-center">
-                    <table class="table">
-                            <thead class="thead-dark">
-                              <tr>
-                                <th scope="col">Nombre del Servidor</th>
-                                <th scope="col">Estado</th>
-                                <th>Editar</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr> {% for object in list_server %}
-                                <td>{{ object.name}}</td>
-                                <td>{{ object.is_active|yesno:'Activo,Inactivo' }}</td>
+            <div class="text-center"><br>
+                <button class="btn btn-ingresar" type="submit">Guardar</button>
+                <a class="btn  btn-outline-danger" href="{% url 'list:list' %}" role="button">Cancelar</a>
+            </div>
+        </form>      
+    </div><br>
+    <div class="container">
+        <div class="text-center">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nombre del Servidor</th>
+                        <th scope="col">Estado</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr> {% for object in list_server %}
+                        <td>{{ object.name}}</td>
+                        <td>{{ object.is_active|yesno:'Activo,Inactivo' }}</td>
+                        <td><a class="btn" href="{% url 'list:editserver' object.id %}"><i id="material" class="material-icons md-18">edit</i></td>
+                    </tr> {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>            
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text"></h5>
+                    <p class="grey-text text-lighten-4"></p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text"></h5>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container center-align">
+                    <h6> Copyright © 2018 Medellín | Colombia | Gerencia de Ingeniería y Desarrollo Emtelco S.A.S</h6> 
+            </div>
+        </div>
+    </footer>
+    </div>
+    <script>
+        $('#confirm').on('click', function(){
+        swal({
+            title: "Estás seguro de salir?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                window.location.href = "{% url 'login:logout' %}";
+            } 
+            else {
+            }
+        });
+    });
 
-                                <td><a class="btn" href="{% url 'list:editserver' object.id %}"><i id="material" class="material-icons md-18">edit</i></td>
-                                
-                              </tr> {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    </div>
-                        
-            <footer class="page-footer">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col l6 s12">
-                                <h5 class="white-text"></h5>
-                                <p class="grey-text text-lighten-4"></p>
-                            </div>
-                            <div class="col l4 offset-l2 s12">
-                                <h5 class="white-text"></h5>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer-copyright">
-                        <div class="container center-align">
-                              <h6> Copyright © 2018 Medellín | Colombia | Gerencia de Ingeniería y Desarrollo Emtelco S.A.S</h6> 
-                        </div>
-                    </div>
-                </footer>
-                {% for object in list_server %}
-                <script>
-                        $('#confirm').on('click', function(){
-                            swal({
-                                title: "Estás seguro de salir?",
-                                icon: "warning",
-                                buttons: true,
-                                dangerMode: true,
-                                })
-                                .then((willDelete) => {
-                                if (willDelete) {
-                                    window.location.href = "{% url 'login:logout' %}";
-                                } 
-                                else {
-                                }
-                        });
-                    });
-
-                </script>  {% endfor %}              
+    </script>             
     </body>
 </html>

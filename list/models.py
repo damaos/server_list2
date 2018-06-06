@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 choice_option = ('SI', 'SI',),('NO', 'NO',)
 
@@ -92,3 +96,14 @@ class AsignacionCliente(models.Model):
         ordering = ('id',)
         verbose_name_plural = 'Asignacion de Clientes'
         verbose_name = 'Asignacion de Cliente'
+
+
+
+
+class Maestra(models.Model):
+    server  = models.ForeignKey(Server, verbose_name= 'Servidor', on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, verbose_name= 'Cliente', on_delete=models.CASCADE)
+    asignacion = models.ForeignKey(Asignacion, verbose_name= 'Asignacion', on_delete=models.CASCADE)
+    asignacionclient = models.ForeignKey(AsignacionCliente, verbose_name= 'Asignacion Cliente', on_delete=models.CASCADE)
+    platform = models.ForeignKey(Platform, verbose_name= 'Plataforma', on_delete=models.CASCADE)
+    interface = models.ForeignKey(Interface, verbose_name= 'Interface', on_delete=models.CASCADE)

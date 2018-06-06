@@ -18,75 +18,159 @@
     
     <title>{% block title %} Administración de servidores {% endblock %}</title>
 </head>
-<body> 
+<body>
+    <div class="grid-block-p-detail">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand"> Bienvenido {{request.user.first_name}} {{request.user.last_name}}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'list:list' %}">Inicio<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="btn" id="confirm">Salir<span class="sr-only">(current)</span></a> 
-                </li>  
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Administrar
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
-                        <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
-                        <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
-                        <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
-                        <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
-                        <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
-                  
-                    </div>
-                </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0"  method="GET">
-                    <input type='text' name='q' id="q" placeholder='¿Qué desea buscar?' value='{{request.GET.q}}'class="form-control search"/>
-                    <input type="submit" value="Buscar" class="btn">
-                </form>
+        <a class="navbar-brand"> Bienvenido {{request.user.first_name}} {{request.user.last_name}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'list:list' %}">Inicio<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="btn" id="confirm">Salir<span class="sr-only">(current)</span></a> 
+            </li>  
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Administrar
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'list:newserver' %}">Crear Servidor</a>
+                    <a class="dropdown-item" href="{% url 'list:newassign' %}">Crear Asignacion de Interfaz</a>
+                    <a class="dropdown-item" href="{% url 'list:newassignclient' %}">Crear Asignacion de Cliente</a>
+                    <a class="dropdown-item" href="{% url 'list:newclient' %}">Agregar Cliente</a>
+                    <a class="dropdown-item" href="{% url 'list:newinterface' %}">Agregar Interfaz</a>
+                    <a class="dropdown-item" href="{% url 'list:newplatform' %}">Agregar Plataforma</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0"  method="GET">
+            <input type='text' name='q' id="q" placeholder='¿Qué desea buscar?' value='{{request.GET.q}}'class="form-control search"/>
+            <input type="submit" value="Buscar" class="btn">
+        </form>
+    </div>
+    </nav>
+    <div class="container">
+        <div class="text-center">
+            {% for object in list_server %}
+            <h1> <span class="badge badge-secondary">Detalle de: <strong>{{object.name}}</strong></span></h1>
+            {%endfor%}
+        </div><br>
+        {% for object in list_server %} 
+        <div id="contenedor" class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Tipo</h3>
+                        Servidor de tipo <strong>{{object.tipe}}.</strong>
+                </div>
             </div>
-            </nav> <br>
-            <div class="text-center">
-                <h1> <span class="badge badge-secondary">Detalle del Servidor</span></h1>
-             </div>
-             <br><br>
-             {% for object in list_asignacion %}
-            <div class="text-center">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">{{ object.server.name }}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="card-link">Card link</a>
-                      <a href="#" class="card-link">Another link</a>
-                    </div>
-                  </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>Número de interfaces: {{object.num_interface}}</h3>
+                <h4>Interfaces:</h4> 
+                <ol>{% for object in list_asignacion %}
+                    <li><strong>Nombre:</strong>  {{object.interface.name_interface}},  <strong>Ip:</strong>   {{object.interface.ip}},  <strong>Puerto:</strong>  {{ object.interface.port }}</li>
+                    {%endfor%}
+                </ol>
             </div>
-            {% endfor %}
-                <script>
-                        $('#confirm').on('click', function(){
-                            swal({
-                                title: "Estás seguro de salir?",
-                                icon: "warning",
-                                buttons: true,
-                                dangerMode: true,
-                                })
-                                .then((willDelete) => {
-                                if (willDelete) {
-                                    window.location.href = "{% url 'login:logout' %}";
-                                } 
-                                else {
-                                }
-                        });
-                    });
-                </script>                
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>Virtualizacion:</h3>
+                Servidor  <strong>{{object.virtual|yesno:'Virtualizado,No Virtualizado'}}</strong>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>Plataforma:</h3>
+                Plataforma del Servidor <strong>{{object.platform }}.</strong> 
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+               <h3>Sistema:</h3>
+                Servidor con sistema <strong>{{object.system_operative}}</strong>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>Modelo:</h3>
+                    Servidor <strong>{{object.model}}</strong>
+                </div>
+            </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>Servicio:</h3>
+                Presta el servicio de  <strong>{{object.service}}</strong>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+               <h3>Clientes:</h3>
+               <ul>{% for object in list_client %}
+                   <li><strong>{{ object.client}}</strong></li>
+                   {%endfor%}
+               </ul>
+            </div>
+        </div>
+        <div class="card">
+           <div class="card-body">
+               <h3>Ubicacion:</h3>
+                Este servidor se encuentra en la ciudad de <strong>{{object.city}}</strong> en la sede de <strong>{{ object.seat}}</strong> en el rack  <strong>{{ object.rack}}.</strong>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+               <h3>Observasion:</h3>
+                <em>{{object.observation}}</em>
+                <a id="volver" class="btn" href="{% url 'list:list'  %}">Volver<i class="material-icons md-18">keyboard_return</i></a></td>
+            </div>
+        </div>
+    </div>
+    </div><br>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text"></h5>
+                    <p class="grey-text text-lighten-4"></p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text"></h5>
+                    <br>
+                    <ul>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container center-align">
+                    <h6> Copyright © 2018 Medellín | Colombia | Gerencia de Ingeniería y Desarrollo Emtelco S.A.S</h6> 
+            </div>
+        </div>
+    </footer>
+</div>
+</div>
+    {% endfor %}
+    <script>
+        $('#confirm').on('click', function(){
+            swal({
+                title: "Estás seguro de salir?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = "{% url 'login:logout' %}";
+                } 
+                else {
+                }
+        });
+    });
+    </script>                
 </body>
 </html>

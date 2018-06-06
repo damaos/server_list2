@@ -1,0 +1,64 @@
+
+<div class="container_base">
+            <div class="titlle_div">
+                <h5 class="titlehome">Edición de usuarios</h5>
+            </div>    
+            <div class="padding">
+                <div class="container_base_info">
+	       <form method="post" novalidate>{% csrf_token %}
+	        
+	        <div class="form-group  col-md-4">
+	            <label class="control-label">Usuario de red emtelco</label>
+	            {{form.username|add_class:"form-control"}}
+	            <div style="color:red">{{form.username.errors}}</div>
+	        </div>
+	        <div class="form-group  col-md-4">
+	            <label class="control-label">{{form.first_name.label}}</label>
+	            {{form.first_name|add_class:"form-control"}}
+	            <label style="color:red">{{form.first_name.errors}}</label>
+	        </div>
+	        <div class="form-group  col-md-4">
+	            <label class="control-label">Apellidos</label>
+	            <br>{{form.last_name|add_class:"form-control"}}
+	            <label style="color:red">{{form.last_name.errors}}</label>
+	        </div>
+	        <div class="clearfix"></div>
+	        <div class="form-group col-md-4">
+	            <label class="control-label">Estado</label>
+	            <br>{{form.is_active|add_class:"form-control type-diarie"}}
+	            <div style="color:red">{{form.is_active.errors}}</div>
+	        </div>
+	        <div class="form-group col-md-4">
+	            <label class="control-label">Perfil</label>
+	            <br>{{form.profile|add_class:"form-control"}}
+	            <div style="color:red">{{form.profile.errors}}</div>
+	        </div>
+	        
+	        
+	        <div class="clearfix"></div>
+	        <div class="text-center">
+	            <br>
+	            <a href="{%url 'login:user' %}"><input type="Button" value="Atrás" class="btn btn-primary" Text="Atrás"/></a>
+	            <input type="submit" value="Actualizar" class="btn btn-info"/>                   
+	        </div>
+	    </form>  
+         <br><br><br>
+       </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+$("#close").on('click',function() {
+	window.close()
+});
+
+
+$(document).ready(function(){
+    $('#id_username').attr('readonly','readonly');
+     $('#id_profile').val({{value}});
+});
+
+
+</script>
+
+{% endblock %}

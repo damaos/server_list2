@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
 ]
+
+ACCOUNT_ACTIVATION_DAYS = 7
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,21 +127,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-
 INFO_ELDA = 'http://10.1.1.155:8888/user_data'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = '10.1.1.11'
 EMAIL_HOST_USER = 'AppNotifications@epmcc-pob.com'
 EMAIL_HOST_PASSWORD = 'ovj#vVls'
-
-# STATICFILES_DIRS = (
-#    os.path.join(BASE_DIR, "static"), 
-# )
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#MEDIA_ROOT = '/media/windowsshare/'
-MEDIA_URL = '/media/'
-
 
 CONTENT_TYPES = ['application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/txt', 'text/csv']
 MAX_UPLOAD_SIZE = 500000

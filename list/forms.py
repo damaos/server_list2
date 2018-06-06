@@ -1,5 +1,18 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django import forms
-from .models import Server, Client, Asignacion, Interface, Platform, AsignacionCliente
+import re
+from django.contrib.auth.models import User, Group
+from .models import Server, Client, Asignacion, Interface, Platform, AsignacionCliente, Maestra
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+
+
+
+
+STATUS_TYPE = (
+    (True, 'Activo'),
+    (False, 'Inactivo'),
+)
 
 class ServerForm(forms.ModelForm):
 
@@ -97,3 +110,31 @@ class AsignacionClienteForm(forms.ModelForm):
              'server': forms.Select(attrs={'class': 'form-control '}),
              'client': forms.Select(attrs={'class': 'form-control '}),
          }
+
+
+class MaestraForm(forms.ModelForm):
+    
+    class Meta:
+        model = Maestra
+        fields = ['server', 'client', 'asignacion', 'asignacionclient', 'platform', 'interface']
+
+
+class SignUpForm(UserCreationForm):
+    first_name = forms.CharField(max_length=140, required=True)
+    last_name = forms.CharField(max_length=140, required=False)
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'password1',
+            'password2',
+        )
+
+
+
+
